@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Historia diaria</title>
+<style>
+  body {
+    font-family: 'Georgia', serif;
+    padding: 2rem;
+    background: #f7f2ff;
+    color: #4a3f77;
+    transition: background-color 0.5s, color 0.5s;
+  }
+  .historia-box {
+    background-color: #fff9ff;
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(150, 120, 200, 0.1);
+    max-width: 700px;
+    margin: auto;
+    text-align: left;
+  }
+  .historia-box h3 {
+    text-align: center;
+    color: #7c5ab2;
+  }
+  .historia-box p {
+    margin-bottom: 1.2rem;
+    line-height: 1.6;
+  }
+  .btn-primary {
+    background-color: #b49be0;
+    border: none;
+    color: white;
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-top: 2rem;
+    display: inline-block;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+  .btn-primary:hover {
+    background-color: #a183d5;
+  }
+  /* Modo oscuro */
+  body.dark-mode {
+    background: #2c2a3e;
+    color: #c7c3e0;
+  }
+  body.dark-mode .historia-box {
+    background-color: #3b3752;
+    color: #d0c9f2;
+    box-shadow: 0 0 25px rgba(180, 160, 240, 0.3);
+  }
+  body.dark-mode .btn-primary {
+    background-color: #937aff;
+  }
+  body.dark-mode .btn-primary:hover {
+    background-color: #7a5de6;
+  }
+  /* Botón modo oscuro */
+  #toggleDark {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background-color: #b49be0;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 20px;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 0 5px rgba(180, 155, 224, 0.7);
+    transition: background-color 0.3s;
+    z-index: 1000;
+    transition: opacity 0.5s ease;
+  }
+  #toggleDark:hover {
+    background-color: #a183d5;
+  }
+  
+  /* Animaciones */
+    .fadeOut {
+      opacity: 0;
+      transform: scale(0.95);
+      transition: opacity 0.5s ease, transform 0.4s ease;
+    }
+
+    .pixelado {
+      filter: blur(3px) contrast(200%) brightness(120%);
+      transform: scale(1.05);
+      transition: filter 0.6s ease, transform 0.6s ease;
+    }
+
+    .pixelado.activo {
+      filter: blur(0) contrast(100%) brightness(100%);
+      transform: scale(1);
+    }
+  
+  
+</style>
+</head>
+<body>
+<h2 style="text-align: center;">Historia diaria</h2>
+<button id="toggleDark">Modo Oscuro</button>
+
+<div class="historia-box" id="historiaBox"></div>
+
+<a href="index.html" class="btn-primary">← Volver al inicio</a>
+
+ <!-- Botón 1 -->
+  <div style="text-align: center;">
+    <button id="botonPaso1" class="btn-primary" onclick="mostrarPaso2()">
+      ¿Has leído todas las historias...?
+    </button>
+  </div>
+
+  <!-- Botón 2 y mensaje final -->
+  <div id="contenedorPaso2" style="display: none; text-align: center;">
+    <button id="botonPaso2" class="btn-primary pixelado" onclick="mostrarMensajeFinal()">
+      ¿Te gustaría saber qué conecta cada historia...?
+    </button>
+    <p id="mensajeFinal" style="margin-top: 1.5rem; font-style: italic; display: none;">
+      Sin importar el universo o el día, estas historias tienen una verdad en común: siempre estaré para ti, ya sea como un principe, un codigo, incluso como un espectro fantasioso. No te dejaere sola
+    </p>
+  </div>
+
+
+
+
+<script>
+    
+       function mostrarPaso2() {
+      const boton1 = document.getElementById('botonPaso1');
+      const contenedorPaso2 = document.getElementById('contenedorPaso2');
+
+      boton1.classList.add('fadeOut');
+
+      setTimeout(() => {
+        boton1.style.display = 'none';
+        contenedorPaso2.style.display = 'block';
+
+        // Activar transición pixelada
+        const boton2 = document.getElementById('botonPaso2');
+        setTimeout(() => {
+          boton2.classList.add('activo');
+        }, 50);
+      }, 400);
+    }
+
+    function mostrarMensajeFinal() {
+      document.getElementById('mensajeFinal').style.display = 'block';
+    }
+
+  const historias = {
+  1: {
+    titulo: "Lunes",
+    texto: `Hace algún tiempo, un chico solitario y con la autoestima herida decidió inscribirse en un curso. 
+Lo hizo con una meta sencilla pero necesaria: escapar, al menos un poco, del peso de una semana llena de responsabilidades que lo asfixiaban.
+
+No esperaba mucho, solo un respiro. Pero Dios tenía otros planes.
+
+Allí conoció a muchas personas amables, cada una con su propio brillo... pero hubo alguien que destacó por completo. 
+A sus ojos, ella era distinta: frágil como una flor al amanecer, pero fuerte como el acero que ha resistido mil fuegos.
+
+No recordaba su historia, pero había algo en ella que se sentía familiar. 
+Algo en su forma de mirar, de hablar, de ser... como si su presencia ya formara parte de algún rincón olvidado de su corazón.
+
+Y sin darse cuenta, ese chico encontró más que un descanso: encontró inspiración. 
+Y tal vez, también... un propósito.`
+  },
+  2: {
+    titulo: "Martes",
+    texto: `En un reino lejano y olvidado por el tiempo, un príncipe andaba marcado por la derrota y la desilusión. 
+No solo sus batallas externas habían dejado heridas, sino también las guerras internas que libraba en su alma. 
+Cargaba con el peso de una corona que parecía demasiado grande para su espíritu fatigado.
+
+En lo alto de una torre, lejos de las miradas y de los rumores del castillo, una princesa vivía encerrada. 
+No en cadenas ni muros de piedra, sino en la prisión de sus propios pensamientos y temores. 
+Su mundo era un refugio silencioso, una fortaleza invisible donde el miedo y la soledad eran sus únicos compañeros.
+
+Sin embargo, el destino tejió un lazo sutil entre ambos. 
+El príncipe, buscando redención y esperanza, empezó a sentir la presencia callada de aquella princesa, que aunque oculta, irradiaba una luz tenue pero constante.
+
+En sus silencios compartidos, comenzaron a descubrir que no estaban tan solos como creían. 
+Que sus miedos podían ser enfrentados y que la fortaleza verdadera nace de las heridas que aprendemos a sanar.
+
+Y así, poco a poco, en un reino de sombras y silencios, el príncipe y la princesa tejieron una nueva historia — una donde el valor y la ternura se entrelazan, y donde la esperanza renace en los corazones dispuestos a creer.`
+  },
+  3: {
+    titulo: "Miércoles",
+    texto: `Había un guerrero sencillo, de alma noble y corazón valiente, que vagaba por tierras antiguas buscando un propósito que diera sentido a su batalla diaria.
+
+El peso de sus derrotas y las heridas invisibles de su espíritu comenzaron a nublar su esperanza, y su camino se volvió confuso y solitario.
+
+En medio de esa lucha interna, una luz femenina apareció en su mente: una guía serena y constante que iluminaba su pensamiento y fortalecía su corazón.
+
+Ella no blandía espada ni escudo, pero su presencia silenciosa era un refugio donde el guerrero encontraba descanso para su alma cansada.
+
+Poco a poco, con esa guía interior, el guerrero empezó a sanar sus heridas invisibles y a recordar la fuerza que llevaba dentro.
+
+Comprendió que, aunque la batalla sea dura y el camino incierto, siempre existe una luz que guía hacia algo mejor, hacia la paz y el amor de Dios, acompañando y fortaleciendo incluso en los momentos más oscuros.`
+  },
+  4: {
+    titulo: "Jueves",
+    texto: `En la época Edo, un joven samurai caminaba con paso firme bajo el sol matutino.  
+Era valiente y noble, pero llevaba en su alma una lucha silenciosa que pocos comprendían.  
+
+Un día, mientras descansaba junto a un antiguo cerezo, logró ver acercarse a una bella dama:  
+una presencia sabia y llena de paz, que con curiosidad se acercó para acompañarlo en su soledad.  
+
+El guerrero encontró en ella un consuelo inesperado, una guía que le mostraba un camino más allá del combate y el dolor.  
+
+Entonces llegó la guerra...  
+no con ruido de tambores ni gritos, sino con el peso cruel de lo inevitable.  
+El cielo se nubló, los campos callaron, y el corazón del joven se preparó para lo que debía enfrentar.  
+La batalla fue feroz, marcada por el clamor de las espadas y la furia del destino.  
+
+En medio del caos, el enemigo logró atravesar su corazón con una espada certera,  
+un golpe mortal que lo venció al instante.  
+Aunque su cuerpo cayó, la fuerza de su espíritu permaneció viva,  
+como una luz que nunca se extingue.  
+
+La dama que una vez logró ver no era una mujer de carne y hueso,  
+sino el espíritu del cerezo mismo.  
+Ella lo tomó entre sus brazos, lo cargó con delicadeza,  
+y lo enterró bajo el árbol floreciente,  
+donde su memoria quedaría para siempre,  
+protegida por la belleza y la esperanza.  
+
+El pueblo del joven no tuvo la misma suerte.  
+Las llamas lo consumieron todo: hogares, templos, caminos...  
+pero el cerezo se mantuvo firme,  
+resistiéndose al fuego como si el alma del guerrero lo habitara aún,  
+cuidando lo poco que quedaba del amor, del honor y del recuerdo.`
+  },
+  5: {
+    titulo: "Viernes",
+    texto: `Año 3127.  
+En una ciudad suspendida entre nubes artificiales, donde los humanos vivían conectados a redes neuronales,  
+una joven programadora caminaba en silencio por los pasillos de titanio de la estación orbital Ark-9.
+
+En ese mundo de máquinas y códigos, los recuerdos eran almacenados digitalmente, y las emociones eran consideradas errores del sistema.  
+Sin embargo, ella llevaba algo que el sistema no podía borrar: una memoria viva que nunca fue codificada.
+
+Cada noche, en secreto, se conectaba a una sala prohibida, donde antiguos registros eran proyectados en forma de sueños.  
+Allí, veía a un joven de ojos firmes y mirada serena, alguien que no existía en ninguna base de datos.
+
+Nadie más podía verlo, nadie más podía sentir lo que ella sentía.  
+Él aparecía en los reflejos de los paneles, en los errores de los algoritmos, en las fallas del sistema que nadie lograba explicar.
+
+Ese joven era un eco de un pasado olvidado,  
+un recuerdo que no pertenecía al tiempo ni al código,  
+sino al alma de quien aún creía que el amor no era un error.
+
+La joven nunca supo si aquel rostro era real, o si su corazón lo había creado para no apagarse en ese mundo frío.  
+Pero cada vez que cerraba los ojos, él volvía.  
+Y eso bastaba.
+
+Porque incluso en el futuro, donde todo es digital,  
+hay memorias que el alma conserva... aunque el mundo insista en olvidarlas.`
+  },
+  6: {
+    titulo: "Sábado",
+    texto: `En un reino bañado por la luz de lunas eternas, un joven mago caminaba con orgullo, confiado en su poder y habilidades.
+
+Su magia, desbordante y llamativa, despertó un antiguo gigante que dormía en el corazón del valle.
+
+El titán, cegado por la confusión y la fuerza descontrolada, comenzó a moverse con furia, sin saber cómo canalizar su poder.
+
+En medio de esa tormenta, la chica que el mago admiraba resultó afectada, tocada por el peligro que la rodeaba.
+
+Al ver el daño causado, el joven mago sintió el peso real de su don y la responsabilidad que conlleva.
+
+Decidió entonces proteger a su pueblo y enfrentar al gigante con valor y humildad.
+
+Durante la batalla, un golpe poderoso del gigante lanzó al mago hacia un bosque cercano, donde el impacto le dejó una herida profunda y la pérdida de la vista en uno de sus ojos.
+
+Más que una herida física, fue un llamado al corazón: un recordatorio de que el verdadero poder nace de la humildad y del amor por los demás.
+
+Con renovada fuerza y sabiduría, el mago reunió toda su energía y canalizó un rayo de luz pura, un destello poderoso que atravesó el cielo y tocó al gigante.
+
+El rayo envolvió al titán en una explosión de luz, y el gigante desapareció en un suspiro de viento y luz.
+
+La chica, aún herida, buscó desesperadamente el lugar donde había aterrizado el mago, cruzando un pequeño lago que se extendía entre los árboles del bosque.
+
+Lo encontró grave, rodeado de ramas rotas y hojas caídas, luchando por mantenerse consciente.
+
+La paz volvió al valle, y la joven vio en el mago un cambio verdadero, una transformación que solo el amor y la entrega pueden lograr.
+
+Así, el mago aprendió que el poder no es para dominar, sino para proteger, sanar y cuidar lo que se ama.`
+  },
+  7: {
+    titulo: "Domingo",
+    texto: `Había una viajera que, tras un largo y agotador camino, encontró refugio en una pequeña cabaña.  
+Era una cabaña sencilla, con una sola habitación vacía, donde lo único que existía era un antiguo espejo suspendido en la pared.
+
+Desde hacía días, la joven sentía una extraña nostalgia y mareos inexplicables que la acompañaban desde sus viajes, como si algo del pasado llamara su atención.
+
+Al mirarse en el espejo, vio no solo su reflejo, sino también una figura detrás de ella: un espectro familiar pero borroso, alguien que había olvidado, aunque alguna vez lo había visto.
+
+Sorprendida, volteó lentamente hacia atrás, pero no encontró a nadie.  
+El espectro parecía no estar solo en el espejo; era una presencia intangible, un recuerdo atrapado entre reflejos y sombras.
+
+El espejo revelaba fragmentos de recuerdos que su mente había escondido.  
+Cada vez que ella miraba, veía destellos de un pasado difuso, un rostro conocido que su corazón intentaba retener, pero que su memoria negaba.
+
+El espectro no era un extraño, sino alguien importante que su alma había amado y perdido,  
+pero que ella ya no podía recordar.
+
+La cabaña estaba vacía, sin muebles ni puertas que dieran a otro lugar — solo esa habitación y el espejo que reflejaba lo que el tiempo había borrado.
+
+Y aunque ella no podía traer esos recuerdos a su conciencia, el espejo seguía mostrándole la sombra de aquel que nunca se fue del todo.
+
+Cada vez que la joven se alejaba, la imagen se desvanecía, pero su corazón sabía que, en algún rincón oculto, ese espectro esperaba pacientemente ser recordado.
+
+Una promesa silenciosa entre el reflejo y el alma:  
+*"Aunque olvides, siempre estaré aquí, más allá del tiempo y la memoria."*`
+  }
+};
+
+  function mostrarHistoriaDelDia() {
+    const hoy = new Date().getDay();
+    const historia = historias[hoy] || { titulo: "Bienvenido", texto: "Cada día hay una nueva historia para ti." };
+
+    const contenedor = document.getElementById('historiaBox');
+    contenedor.innerHTML = `<h3>${historia.titulo}</h3>`;
+
+    const parrafos = historia.texto.split('\n\n');
+    parrafos.forEach(p => {
+      const pEl = document.createElement('p');
+      pEl.textContent = p.trim();
+      contenedor.appendChild(pEl);
+    });
+  }
+
+  mostrarHistoriaDelDia();
+
+  // Modo oscuro sincronizado
+  const toggleButton = document.getElementById('toggleDark');
+  window.onload = function () {
+    const modoOscuroGuardado = localStorage.getItem('modoOscuro');
+    if (modoOscuroGuardado === 'true') {
+      document.body.classList.add('dark-mode');
+      toggleButton.textContent = 'Modo Claro';
+    } else {
+      toggleButton.textContent = 'Modo Oscuro';
+    }
+  };
+  toggleButton.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    const activo = document.body.classList.contains('dark-mode');
+    localStorage.setItem('modoOscuro', activo);
+    toggleButton.textContent = activo ? 'Modo Claro' : 'Modo Oscuro';
+  });
+  
+  let lastScrollTop = 0;
+const toggleDark = document.getElementById('toggleDark');
+
+window.addEventListener('scroll', function () {
+    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+    if (scrollTop > lastScrollTop) {
+        // Bajando
+        toggleDark.style.opacity = '0';
+        toggleDark.style.pointerEvents = 'none';
+    } else {
+        // Subiendo
+        toggleDark.style.opacity = '1';
+        toggleDark.style.pointerEvents = 'auto';
+    }
+
+    lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+});
+</script>
+
+</body>
+</html>

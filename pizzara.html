@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pizarra interactiva</title>
+  <style>
+      /* Modo oscuro */
+    body.dark-mode {
+      background: #2c2a3e;
+      color: #c7c3e0;
+    }
+
+    body.dark-mode .historia-box {
+      background-color: #3b3752;
+      color: #d0c9f2;
+      box-shadow: 0 0 25px rgba(180, 160, 240, 0.3);
+    }
+
+    body.dark-mode .btn-primary {
+      background-color: #937aff;
+    }
+
+    body.dark-mode .btn-primary:hover {
+      background-color: #7a5de6;
+    }
+
+    /* Botón modo oscuro */
+#toggleDark {
+  background-color: #b49be0;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 20px;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 0 0 5px rgba(180, 155, 224, 0.7);
+  transition: background-color 0.3s;
+  transition: opacity 0.5s ease;
+}
+
+#toggleDark:hover {
+  background-color: #a183d5;
+}
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background-color: #f3e8ff;
+      transition: background-color 0.5s, color 0.5s;
+    }
+
+    .dark-mode {
+      background-color: #2c2a3e;
+      color: #ffffff;
+    }
+
+    .controls {
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    button, input[type="color"] {
+      margin: 0.5rem;
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      border: none;
+      background-color: #b49be0;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .dark-mode button {
+      background-color: #937aff;
+    }
+
+    canvas {
+      display: block;
+      margin: 1rem auto;
+      border: 2px solid #b49be0;
+      border-radius: 10px;
+      background-color: white;
+      touch-action: none;
+    }
+
+    .dark-mode canvas {
+      background-color: #f4effb;
+    }
+    
+h2 {
+  color: #7c5ab2;
+  margin-top: 1.5rem;
+}
+
+.canvas-container {
+  margin: 2rem auto;
+  padding: 1rem;
+  background-color: #fff9ff;
+  border-radius: 20px;
+  box-shadow: 0 0 25px rgba(100, 80, 150, 0.1);
+  max-width: 90%;
+}
+
+canvas {
+  border: 2px solid #b49be0;
+  border-radius: 12px;
+  touch-action: none;
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+}
+
+.controls {
+  margin-top: 1.5rem;
+}
+
+.btn-primary {
+  background-color: #b49be0;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-weight: bold;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-primary:hover {
+  background-color: #a183d5;
+  color: white;
+}
+    
+  </style>
+</head>
+<body>
+
+<!-- Cambia este div controles modo oscuro -->
+<div class="controls">
+  <input type="color" id="colorPicker" value="#000000">
+  <button onclick="clearCanvas()">Limpiar</button>
+  <button id="toggleDark">Modo Oscuro</button>
+</div>
+
+<canvas id="canvas" width="350" height="450"></canvas>
+
+<div class="controls">
+  <a href="index.html" class="btn btn-primary">Volver a la página principal</a>
+</div>
+  
+
+<script>
+  const canvas = document.getElementById("canvas");
+  const ctx = canvas.getContext("2d");
+  const colorPicker = document.getElementById("colorPicker");
+
+  let painting = false;
+  let color = colorPicker.value;
+
+  colorPicker.addEventListener("input", () => {
+    color = colorPicker.value;
+  });
+
+  function startDraw(x, y) {
+    painting = true;
+    draw(x, y);
+  }
+
+  function endDraw() {
+    painting = false;
+    ctx.beginPath(); // Termina trazo
+  }
+
+  function draw(x, y) {
+    if (!painting) return;
+    ctx.lineWidth = 3;
+    ctx.lineCap = "round";
+    ctx.strokeStyle = color;
+    ctx.lineTo(x, y);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+  }
+
+  // 🖱️ MOUSE
+  canvas.addEventListener("mousedown", (e) => startDraw(e.offsetX, e.offsetY));
+  canvas.addEventListener("mouseup", endDraw);
+  canvas.addEventListener("mousemove", (e) => draw(e.offsetX, e.offsetY));
+  canvas.addEventListener("mouseleave", endDraw);
+
+  // 📱 TOUCH
+  canvas.addEventListener("touchstart", (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const touch = e.touches[0];
+    startDraw(touch.clientX - rect.left, touch.clientY - rect.top);
+  });
+
+  canvas.addEventListener("touchmove", (e) => {
+    e.preventDefault(); // Evita scroll
+    const rect = canvas.getBoundingClientRect();
+    const touch = e.touches[0];
+    draw(touch.clientX - rect.left, touch.clientY - rect.top);
+  });
+
+  canvas.addEventListener("touchend", endDraw);
+  canvas.addEventListener("touchcancel", endDraw);
+
+  // Limpiar canvas
+  function clearCanvas() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+
+  // Modo oscuro
+const toggleDarkBtn = document.getElementById('toggleDark');
+
+// Al cargar la página, verifica modo oscuro y ajusta texto
+window.onload = () => {
+  if (localStorage.getItem("modoOscuro") === "true") {
+    document.body.classList.add("dark-mode");
+    toggleDarkBtn.textContent = "Modo Claro";
+  } else {
+    toggleDarkBtn.textContent = "Modo Oscuro";
+  }
+};
+
+toggleDarkBtn.addEventListener('click', () => {
+  document.body.classList.toggle("dark-mode");
+  const isDark = document.body.classList.contains("dark-mode");
+  localStorage.setItem("modoOscuro", isDark);
+  toggleDarkBtn.textContent = isDark ? "Modo Claro" : "Modo Oscuro";
+});
+  // Mantener modo oscuro al recargar
+  window.onload = () => {
+    if (localStorage.getItem("modoOscuro") === "true") {
+      document.body.classList.add("dark-mode");
+    }
+  };
+  
+  let lastScrollTop = 0;
+const toggleDark = document.getElementById('toggleDark');
+
+window.addEventListener('scroll', function () {
+    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+    if (scrollTop > lastScrollTop) {
+        // Bajando
+        toggleDark.style.opacity = '0';
+        toggleDark.style.pointerEvents = 'none';
+    } else {
+        // Subiendo
+        toggleDark.style.opacity = '1';
+        toggleDark.style.pointerEvents = 'auto';
+    }
+
+    lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+});
+</script>
+</body>
+</html>
