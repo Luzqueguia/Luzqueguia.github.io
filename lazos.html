@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Constelación</title>
   <style>
+  
+  
+  
     body {
       margin: 0;
       background-color: #0a0a0a;
@@ -50,7 +53,7 @@
       margin-top: 1.2rem;
       font-style: italic;
       opacity: 0;
-      transition: opacity 1.2s ease;
+      transition: opacity 0.9s ease;
       text-align: center;
       max-width: 80%;
       min-height: 1.5rem;
@@ -112,9 +115,59 @@
     .modal button:hover {
       background-color: #444;
     }
+    /* Fondo de noche para la transición */
+#overlayNoche {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(to top, #0b0c2a, #1a1b3d);
+  z-index: 9999;
+  overflow: hidden;
+  display: flex;
+  pointer-events: all;
+  justify-content: center;
+  align-items: center;
+  opacity: 1;
+  transition: opacity 3s ease;
+}
+
+/* Estrellas pequeñas y parpadeantes */
+.estrella {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background-color: white;
+  border-radius: 50%;
+  opacity: 0.8;
+  animation: parpadeoEstrella 2s infinite alternate;
+}
+
+@keyframes fadeInFast {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+#overlayNocheTexto {
+  position: absolute;
+  color: #dcdcdc;
+  font-family: 'Georgia', serif;
+  font-size: 2.5rem;
+  text-align: center;
+  width: 100%;
+  top: 40%;
+  text-shadow: 0 0 10px #fff, 0 0 20px #b49be0, 0 0 30px #a183d5;
+  user-select: none;
+  pointer-events: none;
+  opacity: 0;
+  animation: fadeInFast 0.5s ease forwards; /* Aparece rápido en 0.5 segundos */
+  transition: opacity 3s ease;
+}
   </style>
 </head>
 <body>
+    
+<div id="overlayNoche">
+  <div id="overlayNocheTexto">Bienvenida a tu constelación</div>
+</div>
 
   <h2 id="titulo">Constelación</h2>
 
@@ -254,6 +307,32 @@
     drawConstellation();
   });
 </script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const overlay = document.getElementById('overlayNoche');
+  const texto = document.getElementById('overlayNocheTexto');
+
+  for (let i = 0; i < 100; i++) {
+    const star = document.createElement('div');
+    star.classList.add('estrella');
+    star.style.top = `${Math.random() * 100}%`;
+    star.style.left = `${Math.random() * 100}%`;
+    star.style.animationDuration = `${1 + Math.random() * 2}s`;
+    star.style.animationDelay = `${Math.random() * 2}s`;
+    overlay.appendChild(star);
+  }
+
+  // Espera 0.5s para que termine fadeIn, luego mantiene visible 3.5s y después desvanece todo
+  setTimeout(() => {
+    overlay.style.opacity = '0';
+    texto.style.opacity = '0';
+    setTimeout(() => {
+      overlay.style.display = 'none';
+    }, 3000);
+  }, 4000);
+});
+</script>
+
 
 </body>
 </html>
