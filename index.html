@@ -180,6 +180,27 @@ transition: opacity 0.5s ease;
 #toggleDark:hover {
 background-color: #a183d5;
 }
+
+.luciernaga {
+  position: fixed;
+  color: #ffd1a4;
+  font-size: 1.3rem;
+  pointer-events: none;
+  animation: parpadeo 2s ease-in-out infinite, flotacion 5s linear forwards;
+  opacity: 0;
+  z-index: 9999;
+}
+
+@keyframes parpadeo {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 2; }
+}
+
+@keyframes flotacion {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(10px, -40px); opacity: 0; }
+}
+
 </style>
 </head>
 <body>
@@ -242,14 +263,14 @@ Este sitio no tiene respuestas mágicas, solo lo que me nace decirte: palabras d
 <h5></h5
 <br>
 <a href="pizzara.html" title="Leer historia" class="btn btn-primary mt-4" style="font-style: italic;">
-    ✍️Dibuja con amor aquí
+    ✍️Dibuja con amor
 <br>
 <a href="historia.html" title="Leer historia" class="btn btn-primary mt-4" style="font-style: italic;">
     📖 Una historia diaria para Ti
 </a>
 
 <a href="lazos.html" title="unidos" class="btn btn-primary mt-4" style="font-style: italic;">
-    🌠Un pedazo de galaxia
+    🌌 Un pedazo de galaxia
 </a>
 <br>
 <!-- Imagen especial -->
@@ -315,13 +336,37 @@ toggleDark.addEventListener('click', () => {
     localStorage.setItem('modoOscuro', activo);
     toggleDark.textContent = activo ? 'Modo Claro' : 'Modo Oscuro';
 });
-
 function mostrarImagen() {
-    const img = document.getElementById('imagenSorpresa');
-    const mensaje = document.getElementById('mensajeImagen');
-    const visible = img.style.display === 'block';
-    img.style.display = visible ? 'none' : 'block';
-    mensaje.style.display = visible ? 'none' : 'block';
+  const img = document.getElementById('imagenSorpresa');
+  const mensaje = document.getElementById('mensajeImagen');
+  const visible = img.style.display === 'block';
+
+  img.style.display = visible ? 'none' : 'block';
+  mensaje.style.display = visible ? 'none' : 'block';
+
+  if (!visible) {
+    generarEstrellas(29); // Lluvia de estrellas cuando se muestra la imagen
+  }
+}
+
+function generarEstrellas(cantidad) {
+  for (let i = 0; i < cantidad; i++) {
+    const luciernaga = document.createElement('div');
+    luciernaga.classList.add('luciernaga');
+    luciernaga.innerText = '✦';
+
+    const size = Math.random() * 1.5 + 0.5;
+    luciernaga.style.fontSize = `${size}rem`;
+
+    luciernaga.style.left = `${Math.random() * window.innerWidth}px`;
+    luciernaga.style.top = `${Math.random() * window.innerHeight}px`;
+
+    document.body.appendChild(luciernaga);
+
+    setTimeout(() => {
+      luciernaga.remove();
+    }, 5000); // Desaparecen después de 5 segundos
+  }
 }
 
 function mostrarFrase(estado) {
@@ -337,6 +382,7 @@ function mostrarFrase(estado) {
     };
     document.getElementById('respuestaEmocion').textContent = mensaje[estado] || '';
 }
+
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
