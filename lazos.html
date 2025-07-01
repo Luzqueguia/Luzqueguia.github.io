@@ -11,7 +11,7 @@
     body {
       margin: 0;
       background-color: #0a0a0a;
-      color: #ffd1a4;
+      color: #1e0033;
       font-family: 'Georgia', serif;
       display: flex;
       flex-direction: column;
@@ -22,20 +22,20 @@
     h2 {
       margin: 1rem 0 0.5rem;
       font-size: 1.8rem;
-      color: #ffd1a4;
+      color: #CBC3E3;
       text-align: center;
     }
 
     canvas {
       background-color: #0a0a0a;
-      border: 2px solid #ffd1a4;
+      border: 2px solid #D8BFD8;
       border-radius: 12px;
       max-width: 80vw;
     }
 
     .btn {
-      background-color: #2e2e2e;
-      color: #ffd1a4;
+      background-color: #1e0033;
+      color: #D8BFD8;
       padding: 0.6rem 1rem;
       border-radius: 10px;
       text-decoration: none;
@@ -48,16 +48,23 @@
     .btn:hover {
       background-color: #444;
     }
-
-    #mensaje {
-      margin-top: 1.2rem;
-      font-style: italic;
-      opacity: 0;
-      transition: opacity 0.9s ease;
-      text-align: center;
-      max-width: 80%;
-      min-height: 1.5rem;
-    }
+#mensaje {
+  position: relative;
+  background-color: rgba(90, 40, 150, 0.35); /* morado translúcido */
+  border: 2px solid #bba8ff;
+  border-radius: 14px;
+  padding: 1rem 1.4rem;
+  color: #f3e8ff;
+  max-width: 400px;
+  margin: 1rem auto;
+  font-size: 1.1rem;
+  font-style: italic;
+  text-align: center;
+  box-shadow: 0 0 12px rgba(160, 100, 255, 0.2);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
 
     .botones-container {
       display: flex;
@@ -86,8 +93,8 @@
 
     .modal-content {
       background-color: #0a0a0a;
-      border: 2px solid #ffd1a4;
-      color: #ffd1a4;
+      border: 2px solid #CBC3E3;
+      color: #9966CC;
       padding: 1.5rem;
       border-radius: 12px;
       text-align: center;
@@ -104,7 +111,7 @@
     .modal button {
       margin-top: 1rem;
       background-color: #2e2e2e;
-      color: #ffd1a4;
+      color: #9966CC;
       border: none;
       padding: 0.5rem 1rem;
       border-radius: 8px;
@@ -161,9 +168,37 @@
   animation: fadeInFast 0.5s ease forwards; /* Aparece rápido en 0.5 segundos */
   transition: opacity 3s ease;
 }
+#fondoNebulosa {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle at 20% 30%, #b49be0, transparent 70%), 
+              radial-gradient(circle at 80% 70%, #a183d5, transparent 60%), 
+              radial-gradient(circle at 50% 50%, #6e57a7, transparent 80%);
+  background-blend-mode: screen;
+  animation: nebulosaAnim 15s ease-in-out infinite alternate;
+  z-index: -2; /* atrás de todo */
+}
+
+@keyframes nebulosaAnim {
+  0% {
+    background-position: 20% 30%, 80% 70%, 50% 50%;
+  }
+  100% {
+    background-position: 30% 40%, 70% 60%, 55% 45%;
+  }
+}
+#canvas {
+  background-color: transparent !important;
+}
+
   </style>
 </head>
 <body>
+    
+    <div id="fondoNebulosa"></div>
     
 <div id="overlayNoche">
   <div id="overlayNocheTexto">Bienvenida a tu constelación</div>
