@@ -182,7 +182,16 @@ top: 600px;
 .boton-volver:hover {
   background-color: #444444;
 }
+button, a {
+  -webkit-tap-highlight-color: transparent; /* Elimina el azul al tocar en móviles */
+  outline: none; /* Quita borde de enfoque */
+}
+button:focus, a:focus {
+  outline: none;
+  box-shadow: none;
+}
 
+      
   </style>
 </head>
 <body>
