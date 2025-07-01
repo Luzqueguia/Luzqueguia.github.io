@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vela de oración</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #000000;
+      font-family: 'Segoe UI', sans-serif;
+      color: #eee;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+  /* Fondo luz amarilla suave */
+#focoLuz {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 2s ease;
+  background: radial-gradient(circle at center, rgba(255, 255, 150, 0.3) 0%, #2f2f2f 60%);
+  z-index: 0;
+}
+
+/* Texto modificable oculto al inicio */
+.texto-modificable {
+  position: fixed;
+  bottom: 70px;
+  color: #fff7b0; /* amarillo claro */
+  font-style: italic;
+  font-size: 1.1rem;
+  z-index: 20;
+  text-align: center;
+  width: 100%;
+  user-select: none;
+top: 600px;
+  
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1.5s ease;
+}
+.texto-modificable.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+    .cruz {
+      position: absolute;
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: opacity 2s ease;
+      z-index: 1;
+    }
+
+    .cruz div {
+      position: absolute;
+      background-color: #C0C0C0;
+      border-radius: 4px;
+    }
+
+    .cruz .vertical {
+      width: 18px;
+      height: 120px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .cruz .horizontal {
+      width: 70px;
+      height: 18px;
+      top: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .cruz.visible {
+      opacity: 1;
+      filter: drop-shadow(0 0 10px #C0C0C0) drop-shadow(0 0 20px #E0E0E0);
+    }
+
+    .vela-container {
+      position: relative;
+      text-align: center;
+      z-index: 5;
+      margin-top: 70px;
+    }
+
+    .vela {
+      position: relative;
+      width: 50px;
+      height: 100px;
+      background: linear-gradient(to bottom, #fff4e6, #ffe0b2);
+      border-radius: 12px 12px 5px 5px;
+      box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.2);
+      margin: auto;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 2s ease;
+      z-index: 10;
+      filter: drop-shadow(0 0 15px #fff1a8);
+    }
+
+    .llama {
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 24px;
+      height: 36px;
+      background: radial-gradient(ellipse at center, #ffd700 40%, #ff8c00 70%, transparent 100%);
+      border-radius: 50%;
+      opacity: 0;
+      animation: flameFlicker 1s infinite ease-in-out;
+      transition: opacity 2s ease;
+      z-index: 11;
+      filter: drop-shadow(0 0 10px #ffcc00);
+      visibility: hidden;
+    }
+
+    @keyframes flameFlicker {
+      0% { transform: translateX(-50%) scale(1) rotate(0deg); opacity: 0.95; }
+      50% { transform: translateX(-50%) scale(1.1) rotate(3deg); opacity: 1; }
+      100% { transform: translateX(-50%) scale(1) rotate(-3deg); opacity: 0.9; }
+    }
+
+    .base {
+      width: 80px;
+      height: 20px;
+      background: radial-gradient(circle at center, #999 10%, #666 80%);
+      border-radius: 10px;
+      margin: 8px auto 0;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 2s ease;
+      z-index: 10;
+    }
+
+    button {
+      position: fixed;
+      bottom: 20px;
+      background-color: #2c2c2c;
+      border: 1px solid #c0c0c0;
+      padding: 0.8rem 2rem;
+      border-radius: 25px;
+      color: #f5f5f5;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transition: background 0.3s;
+      z-index: 20;
+    }
+
+    button:hover {
+      background-color: #444444;
+    }
+    
+    .boton-volver {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background-color: #2c2c2c;
+  color: #f5f5f5;
+  padding: 8px 14px;
+  font-size: 0.85rem;
+  border-radius: 20px;
+  text-decoration: none;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  transition: background 0.3s ease;
+  z-index: 999;
+}
+
+.boton-volver:hover {
+  background-color: #444444;
+}
+
+  </style>
+</head>
+<body>
+
+  <div id="focoLuz"></div>
+
+  <div class="cruz" id="cruz">
+    <div class="vertical"></div>
+    <div class="horizontal"></div>
+  </div>
+
+  <div class="vela-container">
+    <div class="vela" id="vela">
+      <div class="llama" id="llama"></div>
+    </div>
+    <div class="base" id="base"></div>
+  </div>
+
+  <div class="texto-modificable" id="textoModificable">
+    Aquí puedes escribir tu mensaje personalizado de oración
+  </div>
+
+  <button onclick="encenderVela()">Encender vela</button>
+
+<a href="index.html" class="boton-volver">⟵ Volver</a>
+
+  <script>
+   function encenderVela() {
+  const llama = document.getElementById('llama');
+  const vela = document.getElementById('vela');
+  const base = document.getElementById('base');
+  const cruz = document.getElementById('cruz');
+  const focoLuz = document.getElementById('focoLuz');
+  const texto = document.getElementById('textoModificable');
+
+  vela.style.visibility = 'visible';
+  vela.style.opacity = '1';
+
+  base.style.visibility = 'visible';
+  base.style.opacity = '1';
+
+  llama.style.visibility = 'visible';
+  llama.style.opacity = '1';
+
+  focoLuz.style.opacity = '1';
+  cruz.classList.add('visible');
+
+  texto.classList.add('visible'); // Mostrar texto con transición
+  texto.textContent = "Dónde hay fe, una chispa basta para ilumnarlo todo.";
+}
+  </script>
+
+</body>
+</html>
