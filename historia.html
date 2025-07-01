@@ -99,8 +99,27 @@
       filter: blur(0) contrast(100%) brightness(100%);
       transform: scale(1);
     }
-  
-  
+ 
+#mensajeFinal {
+  opacity: 0;
+  transform: translateY(20px) rotateX(15deg);
+  filter: blur(3px);
+  transition: all 1.5s ease;
+  transform-origin: top center;
+}
+#mensajeFinal.visible {
+  display: block;
+  opacity: 1;
+  transform: translateY(0) rotateX(0);
+  filter: blur(0);
+}
+#botonPaso2.fadeOut {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.5s ease, transform 0.4s ease;
+}
+
+
 </style>
 </head>
 <body>
@@ -119,13 +138,13 @@
   </div>
 
   <!-- Botón 2 y mensaje final -->
+      <p id="mensajeFinal" style="margin-top: 1.5rem; font-style: italic; display: none;">
+      Sin importar el universo o el día, estas historias tienen una verdad en común: siempre estaré para ti, ya sea como un principe, un codigo, incluso como un espectro fantasioso. No te dejaere sola
+    </p>
   <div id="contenedorPaso2" style="display: none; text-align: center;">
     <button id="botonPaso2" class="btn-primary pixelado" onclick="mostrarMensajeFinal()">
       ¿Te gustaría saber qué conecta cada historia...?
     </button>
-    <p id="mensajeFinal" style="margin-top: 1.5rem; font-style: italic; display: none;">
-      Sin importar el universo o el día, estas historias tienen una verdad en común: siempre estaré para ti, ya sea como un principe, un codigo, incluso como un espectro fantasioso. No te dejaere sola
-    </p>
   </div>
 
 
@@ -152,8 +171,20 @@
     }
 
     function mostrarMensajeFinal() {
-      document.getElementById('mensajeFinal').style.display = 'block';
-    }
+  const mensaje = document.getElementById('mensajeFinal');
+  const boton = document.getElementById('botonPaso2');
+
+  mensaje.style.display = 'block';
+  setTimeout(() => {
+    mensaje.classList.add('visible');
+  }, 10); // activa animación
+
+  // Desvanecer el botón suavemente
+  boton.classList.add('fadeOut');
+  setTimeout(() => {
+    boton.style.display = 'none';
+  }, 500); // espera a que termine la animación
+}
 
   const historias = {
   1: {
