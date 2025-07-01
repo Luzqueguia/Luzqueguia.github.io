@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Constelación</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #0a0a0a;
+      color: #ffd1a4;
+      font-family: 'Georgia', serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 1rem;
+    }
+
+    h2 {
+      margin: 1rem 0 0.5rem;
+      font-size: 1.8rem;
+      color: #ffd1a4;
+      text-align: center;
+    }
+
+    canvas {
+      background-color: #0a0a0a;
+      border: 2px solid #ffd1a4;
+      border-radius: 12px;
+      max-width: 80vw;
+    }
+
+    .btn {
+      background-color: #2e2e2e;
+      color: #ffd1a4;
+      padding: 0.6rem 1rem;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      margin: 0.5rem;
+    }
+
+    .btn:hover {
+      background-color: #444;
+    }
+
+    #mensaje {
+      margin-top: 1.2rem;
+      font-style: italic;
+      opacity: 0;
+      transition: opacity 0.9s ease;
+      text-align: center;
+      max-width: 80%;
+      min-height: 1.5rem;
+    }
+
+    .botones-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .boton-index {
+      margin-top: 0.5rem;
+      text-decoration: none;
+    }
+
+    /* MODAL ESTILO */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 100;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.7);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background-color: #0a0a0a;
+      border: 2px solid #ffd1a4;
+      color: #ffd1a4;
+      padding: 1.5rem;
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    .modal input {
+      padding: 0.5rem;
+      border-radius: 8px;
+      border: none;
+      font-size: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    .modal button {
+      margin-top: 1rem;
+      background-color: #2e2e2e;
+      color: #ffd1a4;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .modal button:hover {
+      background-color: #444;
+    }
+  </style>
+</head>
+<body>
+
+  <h2 id="titulo">Constelación</h2>
+
+  <div class="botones-container">
+    <button onclick="mostrarInput()" class="btn">🌟 Cambiar nombre</button>
+    <button onclick="guardarNombre()" class="btn">💾 Guardar</button>
+  </div>
+
+  <canvas id="canvas" width="320" height="550"></canvas>
+  <div id="mensaje"></div>
+
+  <a href="index.html" class="btn boton-index">← Volver al inicio</a>
+
+  <!-- MODAL CAMBIO DE NOMBRE -->
+  <div id="nombreModal" class="modal">
+    <div class="modal-content">
+      <p>¿Qué nombre quieres darle a la constelación?</p>
+      <input type="text" id="nombreInput" placeholder="Escribe un nombre..." />
+      <br />
+      <button onclick="confirmarNombre()">Confirmar</button>
+    </div>
+  </div>
+
+  <!-- MODAL CONFIRMACIÓN GUARDADO -->
+  <div id="guardadoModal" class="modal">
+    <div class="modal-content">
+      <p>🌟 El nombre ha sido guardado correctamente.</p>
+      <button onclick="cerrarGuardadoModal()">OK</button>
+    </div>
+  </div>
+<script>
+  const canvas = document.getElementById('canvas');
+  const ctx = canvas.getContext('2d');
+  const mensajeBox = document.getElementById('mensaje');
+  const titulo = document.getElementById('titulo');
+
+  const estrellas = [
+    { emoji: "❤️", x: 150, y: 160, texto: "Tu amor ilumina todo." },
+    { emoji: "💖", x: 100, y: 120, texto: "Tu ternura da forma a mi fe." },
+    { emoji: "💗", x: 200, y: 120, texto: "Tu luz brilla aun en la sombra." },
+    { emoji: "💞", x: 80, y: 190, texto: "Eres fuerte aun cuando tiemblas." },
+    { emoji: "💕", x: 220, y: 190, texto: "El cielo escucha tu corazón." },
+    { emoji: "💓", x: 70, y: 270, texto: "Dios camina contigo." },
+    { emoji: "💘", x: 230, y: 270, texto: "Siempre hay esperanza viva." },
+    { emoji: "💝", x: 150, y: 340, texto: "Aquí estoy. Siempre." }
+  ];
+
+  function drawConstellation() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.font = '28px serif';
+
+    estrellas.forEach(e => {
+      ctx.fillText(e.emoji, e.x, e.y);
+    });
+
+    ctx.strokeStyle = '#ffd1a4';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+
+    for (let i = 0; i < estrellas.length - 1; i++) {
+      if (estrellas[i].activa) {
+        const from = estrellas[i];
+        const to = estrellas[i + 1];
+        ctx.moveTo(from.x + 10, from.y);
+        ctx.lineTo(to.x + 10, to.y);
+      }
+    }
+
+    ctx.stroke();
+  }
+
+  function mostrarMensaje(texto) {
+    mensajeBox.textContent = texto;
+    mensajeBox.style.opacity = 1;
+    setTimeout(() => {
+      mensajeBox.style.opacity = 0;
+    }, 3000);
+  }
+
+  canvas.addEventListener('click', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    for (let i = 0; i < estrellas.length - 1; i++) {
+      const est = estrellas[i];
+      const dx = x - est.x;
+      const dy = y - est.y;
+      const distancia = Math.sqrt(dx * dx + dy * dy);
+      if (distancia < 30) {
+        est.activa = !est.activa;
+        drawConstellation();
+        mostrarMensaje(est.texto);
+        break;
+      }
+    }
+
+    // Extra: permite mostrar la última estrella
+    const ultima = estrellas[estrellas.length - 1];
+    const dx = x - ultima.x;
+    const dy = y - ultima.y;
+    const distanciaFinal = Math.sqrt(dx * dx + dy * dy);
+    if (distanciaFinal < 30) {
+      mostrarMensaje(ultima.texto);
+    }
+  });
+
+  function mostrarInput() {
+    document.getElementById('nombreModal').style.display = 'flex';
+  }
+
+  function confirmarNombre() {
+    const input = document.getElementById('nombreInput').value.trim();
+    if (input) {
+      titulo.textContent = input;
+      document.getElementById('nombreModal').style.display = 'none';
+    }
+  }
+
+  function guardarNombre() {
+    const nombre = titulo.textContent.trim();
+    if (nombre) {
+      localStorage.setItem('nombreConstelacion', nombre);
+      document.getElementById('guardadoModal').style.display = 'flex';
+    }
+  }
+
+  function cerrarGuardadoModal() {
+    document.getElementById('guardadoModal').style.display = 'none';
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const guardado = localStorage.getItem('nombreConstelacion');
+    if (guardado) {
+      titulo.textContent = guardado;
+    }
+    drawConstellation();
+  });
+</script>
+
+</body>
+</html>
