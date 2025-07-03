@@ -253,6 +253,34 @@ window.addEventListener('scroll', function () {
 
     lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
 });
+
+function dibujarMarcaDeAgua() {
+  ctx.save();
+  ctx.globalAlpha = 0.15; // Más suave aún
+  ctx.font = "bold 48px Georgia";
+  ctx.fillStyle = "#888"; // Gris medio que se nota
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText("amor", canvas.width / 2, canvas.height / 2);
+  ctx.restore();
+}
+
+window.onload = () => {
+  if (localStorage.getItem("modoOscuro") === "true") {
+    document.body.classList.add("dark-mode");
+    toggleDarkBtn.textContent = "Modo Claro";
+  } else {
+    toggleDarkBtn.textContent = "Modo Oscuro";
+  }
+
+  dibujarMarcaDeAgua(); // 💜 Dibujar “amor” al cargar el canvas
+};
+
+function clearCanvas() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  dibujarMarcaDeAgua(); // 💜 Reaparecer tras limpiar
+}
+
 </script>
 </body>
 </html>

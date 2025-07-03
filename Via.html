@@ -191,7 +191,27 @@ button:focus, a:focus {
   box-shadow: none;
 }
 
-      
+#palabraOculta {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%) scale(0.7);
+  opacity: 0;
+  color: rgba(139, 69, 19, 0.45); /* SaddleBrown con 75% opacidad */
+  font-style: italic;
+  font-weight: bold;
+  font-size: 1.2rem;
+  pointer-events: none;
+  transition: opacity 1.5s ease, transform 0.5s ease;
+  user-select: none;
+  z-index: 12;
+}
+
+#palabraOculta.visible {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+}
+
   </style>
 </head>
 <body>
@@ -204,8 +224,10 @@ button:focus, a:focus {
   </div>
 
   <div class="vela-container">
-    <div class="vela" id="vela">
-      <div class="llama" id="llama"></div>
+   <div class="vela" id="vela">
+  <div class="llama" id="llama"></div>
+  <span id="palabraOculta">he</span>
+</div>
     </div>
     <div class="base" id="base"></div>
   </div>
@@ -218,6 +240,28 @@ button:focus, a:focus {
 
 <a href="index.html" class="boton-volver">⟵ Volver</a>
 
+
+
+
+
+
+<script>
+function encenderVela() {
+  // ... código existente ...
+
+  texto.classList.add('visible'); 
+  texto.textContent = "Dónde hay fe, una chispa basta para iluminarlo todo.";
+
+  // Mostrar palabra oculta
+  const palabra = document.getElementById('palabraOculta');
+  if (palabra) {
+    palabra.style.opacity = '1';
+    palabra.style.border = '1px solid white';
+    palabra.style.boxShadow = '0 0 8px white';
+  }
+}
+</script>
+
   <script>
    function encenderVela() {
   const llama = document.getElementById('llama');
@@ -226,6 +270,7 @@ button:focus, a:focus {
   const cruz = document.getElementById('cruz');
   const focoLuz = document.getElementById('focoLuz');
   const texto = document.getElementById('textoModificable');
+  const palabra = document.getElementById('palabraOculta');
 
   vela.style.visibility = 'visible';
   vela.style.opacity = '1';
@@ -239,9 +284,14 @@ button:focus, a:focus {
   focoLuz.style.opacity = '1';
   cruz.classList.add('visible');
 
-  texto.classList.add('visible'); // Mostrar texto con transición
-  texto.textContent = "Dónde hay fe, una chispa basta para ilumnarlo todo.";
+  texto.classList.add('visible'); 
+  texto.textContent = "Dónde hay fe, una chispa basta para iluminarlo todo.";
+
+  // Mostrar la palabra "te"
+  palabra.classList.add('visible');
 }
+
+
   </script>
 
 </body>

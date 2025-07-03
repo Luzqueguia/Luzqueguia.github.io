@@ -164,6 +164,11 @@
 .btn-cerrar:hover {
   color: #f3e8ff;
 }
+
+setTimeout(() => {
+  document.getElementById('finalSecreto').style.opacity = 1;
+}, 9000); // después de 9 segundos
+
   </style>
   
   
@@ -189,6 +194,18 @@
   </div>
 </div>
 
+<span id="amado" style="
+  display: none;
+  margin-left: 1rem;
+  font-style: italic;
+  font-size: 1.1rem;
+  color: #d6b8ff;
+  transition: opacity 2s ease;
+  opacity: 0;
+">
+  amado
+</span>
+
 <div id="popupSecreto">
   <button id="cerrarPopup" class="btn-cerrar">&times;</button>
   <h4>Mi secreto</h4>
@@ -202,34 +219,112 @@
     Gracias por eso. Gracias por existir. Gracias por tu compañía. Gracias por tanto. Aun sin saberlo, fuiste parte del milagro que evitó que me rindiera.
   </p>
 </div>
+
+</div>
   <script>
-    const preguntas = [
-      {
-        texto: "Soy algo que no se ve, pero guía. No se compra, pero vale más que el oro. ¿Qué soy?",
-        opciones: ["La fe", "El Espíritu Santo", "El tiempo", "La esperanza"],
-        correcta: "El Espíritu Santo",
-      },
-      {
-        texto: "Mientras más me quitas, más grande me vuelvo. ¿Qué soy?",
-        opciones: ["La oscuridad", "El vacío", "El alma", "El pecado"],
-        correcta: "El vacío"
-      },
-      {
-        texto: "Me puedes leer todos los días y siempre aprender algo nuevo. ¿Qué soy?",
-        opciones: ["La Biblia", "Una oración", "El corazón", "Una promesa"],
-        correcta: "La Biblia"
-      },
-      {
-        texto: "No tengo voz, pero puedo hablarte. No tengo forma, pero puedo llenarte. ¿Qué soy?",
-        opciones: ["La presencia de Dios", "El silencio", "El Espíritu", "La fe"],
-        correcta: "La presencia de Dios"
-      },
-      {
-        texto: "Se rompe si hablas. Es frágil como la paz. ¿Qué es?",
-        opciones: ["El silencio", "La promesa", "La verdad", "La confianza"],
-        correcta: "El silencio"
-      }
-    ];
+ const todasLasPreguntas = [
+  {
+    texto: "Es luz en la oscuridad, guía en el desierto y consuelo en la tormenta. ¿Quién es?",
+    opciones: ["El Espíritu Santo", "Un amigo", "El corazón", "La esperanza"],
+    correcta: "El Espíritu Santo",
+  },
+  {
+    texto: "No se ve, pero se siente. No se escucha, pero consuela. ¿Qué es?",
+    opciones: ["El amor de Dios", "El alma", "El viento", "La fe"],
+    correcta: "El amor de Dios",
+  },
+  {
+    texto: "Puede usarse para sanar, para sostener y para restaurar. ¿Qué es?",
+    opciones: ["La palabra de Dios", "El tiempo", "La razón", "El cuerpo"],
+    correcta: "La palabra de Dios",
+  },
+  {
+    texto: "Te puede levantar sin tocarte, hablarte sin palabras y guiarte sin pasos. ¿Qué es?",
+    opciones: ["La oración", "El consejo", "La Biblia", "La fe"],
+    correcta: "La oración",
+  },
+  {
+    texto: "Tiene poder para transformar corazones. No se compra, se entrega. ¿Qué es?",
+    opciones: ["El servicio a Dios", "El perdón", "La entrega", "La disciplina"],
+    correcta: "El servicio a Dios",
+  },
+  {
+    texto: "Fue escrita por muchos, pero inspirada por uno solo. ¿Qué es?",
+    opciones: ["La Biblia", "El Espíritu Santo", "La tradición", "La historia"],
+    correcta: "La Biblia",
+  },
+  {
+    texto: "Es un regalo diario que a veces olvidamos agradecer. ¿Qué es?",
+    opciones: ["La vida", "El descanso", "La fe", "La salud"],
+    correcta: "La vida",
+  },
+  {
+    texto: "Es suave pero firme. Guía sin obligar. ¿Qué es?",
+    opciones: ["El pastoreo", "La conciencia", "La sabiduría", "La obediencia"],
+    correcta: "El pastoreo",
+  },
+  {
+    texto: "Cuando se une a la fe, se vuelve poderosa. ¿Qué es?",
+    opciones: ["La acción", "El amor", "El perdón", "La paciencia"],
+    correcta: "La acción",
+  },
+  {
+    texto: "Es invisible, pero sostiene el alma cuando ya no hay fuerzas. ¿Qué es?",
+    opciones: ["La esperanza", "El Espíritu Santo", "La ternura", "El descanso"],
+    correcta: "La esperanza",
+  },
+  {
+    texto: "No se enseña con palabras, sino con ejemplo. ¿Qué es?",
+    opciones: ["El amor de un líder", "El testimonio", "El respeto", "El conocimiento"],
+    correcta: "El testimonio",
+  },
+  {
+    texto: "Aunque parezca pequeña, puede mover montañas. ¿Qué es?",
+    opciones: ["La fe", "La oración", "La humildad", "La duda"],
+    correcta: "La fe",
+  },
+  {
+    texto: "Es dulce y profunda. A veces, la oímos cuando alguien nos abraza con el alma. ¿Qué es?",
+    opciones: ["La voz de Dios", "El perdón", "La ternura", "El alma"],
+    correcta: "La voz de Dios",
+  },
+  {
+    texto: "Se cultiva cada día. Sin ella, el alma se marchita. ¿Qué es?",
+    opciones: ["La comunión con Dios", "La sabiduría", "La obediencia", "La lectura"],
+    correcta: "La comunión con Dios",
+  },
+  {
+    texto: "Puede sanar heridas sin tocarlas. ¿Qué es?",
+    opciones: ["Una palabra de aliento", "El tiempo", "La fe", "El descanso"],
+    correcta: "Una palabra de aliento",
+  },
+  {
+    texto: "No es un lugar físico, pero se siente como hogar. ¿Qué es?",
+    opciones: ["La presencia de Dios", "La iglesia", "La oración", "El cielo"],
+    correcta: "La presencia de Dios",
+  },
+  {
+    texto: "Es una de las formas más puras de amar. ¿Qué es?",
+    opciones: ["El servicio", "El sacrificio", "El consejo", "La ternura"],
+    correcta: "El servicio",
+  },
+  {
+    texto: "Puede ser silenciosa, pero siempre verdadera. ¿Qué es?",
+    opciones: ["La compañía sincera", "El alma", "El consuelo", "La fe"],
+    correcta: "La compañía sincera",
+  },
+  {
+    texto: "Guía, cuida, ora y ama como reflejo de Dios. ¿Quién es?",
+    opciones: ["Una pastora", "Un ángel", "Un padre", "Un líder"],
+    correcta: "Una pastora",
+  },
+  {
+    texto: "No se exige, se entrega. No se busca, se da. ¿Qué es?",
+    opciones: ["El amor verdadero", "El respeto", "La gracia", "La oración"],
+    correcta: "El amor verdadero",
+  },
+];
+const preguntas = todasLasPreguntas.sort(() => 0.5 - Math.random()).slice(0, 5);
 
     let preguntaActual = 0;
     let vidas = 3;
@@ -290,7 +385,7 @@
       setTimeout(() => {
         popup.classList.remove('mostrar');
         popup.style.display = 'none';
-      }, 25000);
+      }, 100000);
     }
 
     const toggleDark = document.getElementById('toggleDark');
@@ -314,8 +409,14 @@
   const popup = document.getElementById('popupSecreto');
   popup.classList.remove('mostrar');
   popup.style.display = 'none';
-});
 
+  // Mostrar la palabra "amado"
+  const amado = document.getElementById('amado');
+  amado.style.display = 'block';
+  setTimeout(() => {
+    amado.style.opacity = 1;
+  }, 100); // ligera pausa para que el transition funcione
+});
 
     cargarPregunta();
     actualizarVidas();

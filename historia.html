@@ -119,12 +119,71 @@
   transition: opacity 0.5s ease, transform 0.4s ease;
 }
 
+#eternoTrigger {
+  position: fixed;
+  top: 45%;
+  left: -10px; /* apenas salido del borde izquierdo */
+  background-color: #4a3f77;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 0 10px 10px 0;
+  cursor: pointer;
+  font-weight: bold;
+  z-index: 1001;
+  transition: left 0.3s ease;
+}
+
+#eternoTrigger:hover {
+  left: 0;
+}
+
+#eternoCuadro {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background-color: #3b2f50; /* Morado profundo */
+  color: #ffd700; /* Letras doradas */
+  padding: 0.5rem 0.9rem;
+  border-radius: 10px;
+  border: 2px solid #ffd700; /* Borde dorado */
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); /* Resplandor dorado */
+  z-index: 1000;
+  display: none;
+  font-size: 0.8rem;
+  font-style: italic;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  opacity: 0;
+  transform: translateY(-10px);
+  white-space: nowrap;
+}
+
+#eternoCuadro.visible {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Modo oscuro */
+body.dark-mode #eternoCuadro {
+  background-color: #2a203b;
+  color: silver;
+  border-color: silver;
+  box-shadow: 0 0 20px rgba(192, 192, 192, 0.3);
+}
 
 </style>
 </head>
 <body>
 <h2 style="text-align: center;">Historia diaria</h2>
 <button id="toggleDark">Modo Oscuro</button>
+
+<!-- Botón lateral semi-salido -->
+<div id="eternoTrigger">❖</div>
+
+<!-- Cuadro que se muestra al hacer clic -->
+<div id="eternoCuadro">
+  <p>eterno</p>
+</div>
 
 <div class="historia-box" id="historiaBox"></div>
 
@@ -406,6 +465,15 @@ window.addEventListener('scroll', function () {
 
     lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
 });
+
+// Mostrar y ocultar el cuadro "eterno"
+const trigger = document.getElementById("eternoTrigger");
+const cuadro = document.getElementById("eternoCuadro");
+
+trigger.addEventListener("click", () => {
+  cuadro.classList.toggle("visible");
+});
+
 </script>
 
 </body>

@@ -1,13 +1,9 @@
-<!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE html><html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Constelación</title>
   <style>
-  
-  
-  
     body {
       margin: 0;
       background-color: #0a0a0a;
@@ -17,40 +13,39 @@
       flex-direction: column;
       align-items: center;
       padding-top: 1rem;
-    }
+    }h2 {
+  margin: 1rem 0 0.5rem;
+  font-size: 1.8rem;
+  color: #CBC3E3;
+  text-align: center;
+}
 
-    h2 {
-      margin: 1rem 0 0.5rem;
-      font-size: 1.8rem;
-      color: #CBC3E3;
-      text-align: center;
-    }
+canvas {
+  background-color: #0a0a0a;
+  border: 2px solid #D8BFD8;
+  border-radius: 12px;
+  max-width: 80vw;
+}
 
-    canvas {
-      background-color: #0a0a0a;
-      border: 2px solid #D8BFD8;
-      border-radius: 12px;
-      max-width: 80vw;
-    }
+.btn {
+  background-color: #1e0033;
+  color: #D8BFD8;
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  margin: 0.5rem;
+}
 
-    .btn {
-      background-color: #1e0033;
-      color: #D8BFD8;
-      padding: 0.6rem 1rem;
-      border-radius: 10px;
-      text-decoration: none;
-      font-weight: bold;
-      border: none;
-      cursor: pointer;
-      margin: 0.5rem;
-    }
+.btn:hover {
+  background-color: #444;
+}
 
-    .btn:hover {
-      background-color: #444;
-    }
 #mensaje {
   position: relative;
-  background-color: rgba(90, 40, 150, 0.35); /* morado translúcido */
+  background-color: rgba(90, 40, 150, 0.35);
   border: 2px solid #bba8ff;
   border-radius: 14px;
   padding: 1rem 1.4rem;
@@ -66,63 +61,62 @@
   transition: opacity 0.6s ease;
 }
 
-    .botones-container {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
+.botones-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
 
-    .boton-index {
-      margin-top: 0.5rem;
-      text-decoration: none;
-    }
+.boton-index {
+  margin-top: 0.5rem;
+  text-decoration: none;
+}
 
-    /* MODAL ESTILO */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 100;
-      left: 0;
-      top: 0;
-      width: 100vw;
-      height: 100vh;
-      background-color: rgba(0, 0, 0, 0.7);
-      justify-content: center;
-      align-items: center;
-    }
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 100;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  justify-content: center;
+  align-items: center;
+}
 
-    .modal-content {
-      background-color: #0a0a0a;
-      border: 2px solid #CBC3E3;
-      color: #9966CC;
-      padding: 1.5rem;
-      border-radius: 12px;
-      text-align: center;
-    }
+.modal-content {
+  background-color: #0a0a0a;
+  border: 2px solid #CBC3E3;
+  color: #9966CC;
+  padding: 1.5rem;
+  border-radius: 12px;
+  text-align: center;
+}
 
-    .modal input {
-      padding: 0.5rem;
-      border-radius: 8px;
-      border: none;
-      font-size: 1rem;
-      margin-top: 0.5rem;
-    }
+.modal input {
+  padding: 0.5rem;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+}
 
-    .modal button {
-      margin-top: 1rem;
-      background-color: #2e2e2e;
-      color: #9966CC;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+.modal button {
+  margin-top: 1rem;
+  background-color: #2e2e2e;
+  color: #9966CC;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
 
-    .modal button:hover {
-      background-color: #444;
-    }
-    /* Fondo de noche para la transición */
+.modal button:hover {
+  background-color: #444;
+}
+
 #overlayNoche {
   position: fixed;
   inset: 0;
@@ -137,7 +131,6 @@
   transition: opacity 3s ease;
 }
 
-/* Estrellas pequeñas y parpadeantes */
 .estrella {
   position: absolute;
   width: 2px;
@@ -165,21 +158,20 @@
   user-select: none;
   pointer-events: none;
   opacity: 0;
-  animation: fadeInFast 0.5s ease forwards; /* Aparece rápido en 0.5 segundos */
+  animation: fadeInFast 0.5s ease forwards;
   transition: opacity 3s ease;
 }
+
 #fondoNebulosa {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: radial-gradient(circle at 20% 30%, #b49be0, transparent 70%), 
-              radial-gradient(circle at 80% 70%, #a183d5, transparent 60%), 
-              radial-gradient(circle at 50% 50%, #6e57a7, transparent 80%);
+  background: radial-gradient(circle at 20% 30%, #b49be0, transparent 70%), radial-gradient(circle at 80% 70%, #a183d5, transparent 60%), radial-gradient(circle at 50% 50%, #6e57a7, transparent 80%);
   background-blend-mode: screen;
   animation: nebulosaAnim 15s ease-in-out infinite alternate;
-  z-index: -2; /* atrás de todo */
+  z-index: -2;
 }
 
 @keyframes nebulosaAnim {
@@ -190,53 +182,54 @@
     background-position: 30% 40%, 70% 60%, 55% 45%;
   }
 }
+
 #canvas {
   background-color: transparent !important;
+}
+
+#teFinal {
+  position: absolute;
+  bottom: 60px;
+  font-size: 1.5rem;
+  font-style: italic;
+  color: #c9a37e;
+  opacity: 0;
+  transition: opacity 1.5s ease;
+  z-index: 30;
 }
 
   </style>
 </head>
 <body>
-    
-    <div id="fondoNebulosa"></div>
-    
-<div id="overlayNoche">
-  <div id="overlayNocheTexto">Bienvenida a tu constelación</div>
-</div>
-
-  <h2 id="titulo">Constelación</h2>
+  <div id="fondoNebulosa"></div>
+  <div id="overlayNoche">
+    <div id="overlayNocheTexto">Bienvenida a tu constelación</div>
+  </div>  <h2 id="titulo">Constelación</h2>
   <div class="botones-container">
     <button onclick="mostrarInput()" class="btn">🌟 Cambiar nombre</button>
     <button onclick="guardarNombre()" class="btn">💾 Guardar</button>
-  </div>
+  </div><canvas id="canvas" width="320" height="550"></canvas>
 
-  <canvas id="canvas" width="320" height="550"></canvas>
   <div id="mensaje"></div>
-
-  <a href="index.html" class="btn boton-index">← Volver al inicio</a>
-
-  <!-- MODAL CAMBIO DE NOMBRE -->
-  <div id="nombreModal" class="modal">
+  <div id="teFinal">te</div>
+  <a href="index.html" class="btn boton-index">← Volver al inicio</a>  <div id="nombreModal" class="modal">
     <div class="modal-content">
       <p>¿Qué nombre quieres darle a la constelación?</p>
       <input type="text" id="nombreInput" placeholder="Escribe un nombre..." />
       <br />
       <button onclick="confirmarNombre()">Confirmar</button>
     </div>
-  </div>
-
-  <!-- MODAL CONFIRMACIÓN GUARDADO -->
-  <div id="guardadoModal" class="modal">
+  </div>  <div id="guardadoModal" class="modal">
     <div class="modal-content">
       <p>🌟 El nombre ha sido guardado correctamente.</p>
       <button onclick="cerrarGuardadoModal()">OK</button>
     </div>
-  </div>
-<script>
+  </div><script>
   const canvas = document.getElementById('canvas');
   const ctx = canvas.getContext('2d');
   const mensajeBox = document.getElementById('mensaje');
   const titulo = document.getElementById('titulo');
+  const teFinal = document.getElementById('teFinal');
 
   const estrellas = [
     { emoji: "❤️", x: 150, y: 160, texto: "Tu amor ilumina todo." },
@@ -286,7 +279,9 @@
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
-    for (let i = 0; i < estrellas.length - 1; i++) {
+    let algunaActivada = false;
+
+    for (let i = 0; i < estrellas.length; i++) {
       const est = estrellas[i];
       const dx = x - est.x;
       const dy = y - est.y;
@@ -295,17 +290,13 @@
         est.activa = !est.activa;
         drawConstellation();
         mostrarMensaje(est.texto);
+        algunaActivada = true;
         break;
       }
     }
 
-    // Extra: permite mostrar la última estrella
-    const ultima = estrellas[estrellas.length - 1];
-    const dx = x - ultima.x;
-    const dy = y - ultima.y;
-    const distanciaFinal = Math.sqrt(dx * dx + dy * dy);
-    if (distanciaFinal < 30) {
-      mostrarMensaje(ultima.texto);
+    if (estrellas.every(e => e.activa)) {
+      teFinal.style.opacity = 1;
     }
   });
 
@@ -340,33 +331,28 @@
     }
     drawConstellation();
   });
-</script>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const overlay = document.getElementById('overlayNoche');
-  const texto = document.getElementById('overlayNocheTexto');
+</script><script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const overlay = document.getElementById('overlayNoche');
+    const texto = document.getElementById('overlayNocheTexto');
 
-  for (let i = 0; i < 100; i++) {
-    const star = document.createElement('div');
-    star.classList.add('estrella');
-    star.style.top = `${Math.random() * 100}%`;
-    star.style.left = `${Math.random() * 100}%`;
-    star.style.animationDuration = `${1 + Math.random() * 2}s`;
-    star.style.animationDelay = `${Math.random() * 2}s`;
-    overlay.appendChild(star);
-  }
+    for (let i = 0; i < 100; i++) {
+      const star = document.createElement('div');
+      star.classList.add('estrella');
+      star.style.top = `${Math.random() * 100}%`;
+      star.style.left = `${Math.random() * 100}%`;
+      star.style.animationDuration = `${1 + Math.random() * 2}s`;
+      star.style.animationDelay = `${Math.random() * 2}s`;
+      overlay.appendChild(star);
+    }
 
-  // Espera 0.5s para que termine fadeIn, luego mantiene visible 3.5s y después desvanece todo
-  setTimeout(() => {
-    overlay.style.opacity = '0';
-    texto.style.opacity = '0';
     setTimeout(() => {
-      overlay.style.display = 'none';
-    }, 3000);
-  }, 4000);
-});
-</script>
-
-
-</body>
+      overlay.style.opacity = '0';
+      texto.style.opacity = '0';
+      setTimeout(() => {
+        overlay.style.display = 'none';
+      }, 3000);
+    }, 4000);
+  });
+</script></body>
 </html>

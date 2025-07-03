@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Una verdad escondida</title>
+  <style>
+    body {
+      margin: 0;
+      background: radial-gradient(ellipse at center, #2b2346 0%, #0a0917 100%);
+      font-family: 'Georgia', serif;
+      color: #f2ecff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .mensaje-final, .caja-secreta, .caja-final {
+      background-color: rgba(180, 160, 240, 0.12);
+      border: 1.5px solid #bba8ff;
+      border-radius: 20px;
+      padding: 2rem 2.5rem;
+      text-align: center;
+      font-size: 1.3rem;
+      font-style: italic;
+      max-width: 600px;
+      box-shadow: 0 0 30px rgba(180, 160, 240, 0.2);
+      backdrop-filter: blur(5px);
+      opacity: 0;
+      animation: fadeIn 2s ease forwards;
+      position: relative;
+      color: #f2ecff;
+      overflow-y: auto;
+      max-height: 80vh;
+    }
+.mensaje-final {
+  opacity: 0;
+  display: block; /* aseguramos que siempre esté visible para poder animarla */
+}
+
+    .caja-secreta, .caja-final {
+      display: none;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .estrella {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.7;
+      animation: parpadeo 2s infinite alternate;
+    }
+
+    @keyframes parpadeo {
+      0% { opacity: 0.3; }
+      100% { opacity: 1; }
+    }
+
+    .volver {
+      margin-top: 2rem;
+      text-decoration: none;
+      background-color: #7f6ab9;
+      color: #f2ecff;
+      padding: 0.6rem 1.2rem;
+      border-radius: 12px;
+      font-weight: bold;
+      box-shadow: 0 0 10px rgba(180, 160, 240, 0.3);
+      transition: background 0.3s;
+      z-index: 2;
+      align-self: center;
+    }
+
+    .volver:hover {
+      background-color: #a088e0;
+    }
+
+    .bloqueado, .desbloqueado {
+      margin-top: 1.5rem;
+      padding: 0.5rem 1.2rem;
+      font-style: italic;
+      border: none;
+      border-radius: 12px;
+      font-weight: bold;
+    }
+
+    .bloqueado {
+      background-color: #5d4e8c;
+      color: #d3c9ff;
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+
+    .desbloqueado {
+      background-color: #a088e0;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .desbloqueado:hover {
+      background-color: #c1a7ff;
+    }
+
+    textarea {
+      margin-top: 1rem;
+      width: 90%;
+      max-width: 500px;
+      height: 80px;
+      border-radius: 10px;
+      border: 1px solid #cfc2ff;
+      padding: 0.8rem;
+      font-size: 1rem;
+      font-family: 'Georgia', serif;
+      background-color: #2d2548;
+      color: #e8dfff;
+      resize: none;
+    }
+
+    textarea::placeholder {
+      color: #cfc2ff;
+      font-style: italic;
+    }
+
+    /* Flecha para avanzar */
+    .flecha {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 2.5rem;
+      color: #bba8ff;
+      cursor: pointer;
+      user-select: none;
+      transition: color 0.3s ease;
+      z-index: 10;
+    }
+    .flecha:hover {
+      color: #e0d0ff;
+    }
+
+    /* Lista en caja final */
+    .caja-final ul {
+      text-align: left;
+      padding-left: 1.6rem;
+      margin-top: 1rem;
+      color: #dcd6ff;
+      font-style: normal;
+      font-size: 1.1rem;
+      list-style-type: decimal;
+    }
+    .caja-final ul li {
+      margin-bottom: 1rem;
+    }
+    .caja-final h4 {
+      margin-bottom: 1rem;
+      font-style: normal;
+      color: #e2d9ff;
+      font-weight: bold;
+      font-size: 1.6rem;
+    }
+    .caja-final p {
+      margin-top: 1.5rem;
+      font-style: italic;
+      color: #d6befd;
+      font-size: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Caja 1 -->
+  <div class="mensaje-final" id="mensajeFinal">
+    Las palabras que hallaste no fueron puestas al azar.<br>
+    Si las unes con el corazón,<br>
+    descubrirás una verdad que siempre ha estado contigo.
+
+    <div class="flecha" title="Siguiente" onclick="mostrarCajaSecreta()">&#8594;</div>
+  </div>
+
+  <!-- Caja 2 -->
+  <div class="caja-secreta" id="cajaSecreta">
+    <p>Este botón está bloqueado.</p>
+    <p>Solo se desbloquea si descubriste la cita bíblica escondida.</p>
+
+    <textarea id="entradaCita" placeholder="Escribe la cita aquí..."></textarea>
+    <br />
+    <button id="botonDesbloqueo" class="bloqueado" disabled>🔒 Desbloquear</button>
+  </div>
+
+  <!-- Caja 3 -->
+  <div class="caja-final" id="cajaFinal">
+  <h4>✨ Lo que he ofrecido por ti</h4>
+  <p><em>(sin que lo supieras)</em></p>
+  <ul>
+    <li><strong>Mis oraciones.</strong><br>Te he mencionado en silencio en más de una conversación con Dios.</li>
+    <li><strong>Mi lucha por ser mejor.</strong><br>Cada día que decido dominar mis emociones, crecer y mantenerme firme, tú has sido una inspiración secreta. Incluso en esta página aprendí y mejoré.</li>
+    <li><strong>Mi camino hacia la pureza.</strong><br>He renunciado a cosas que parecían pequeñas, pero que significaban mucho, porque tú me inspiraste a querer ser mejor… delante de Dios y ante ti, aunque nunca lo supiste</li>
+    <li><strong>Mis desvelos en silencio.</strong><br>
+Algunas noches no podía dormir, no por angustia, sino porque mi corazón seguía despierto pensando en lo valiosa que eres para mí. Aun en la quietud de la madrugada, tu luz era motivo de oración y gratitud.</li>
+    <li><strong>Tiempo y devoción.</strong><br>Todo lo que he creado con fe y detalle, ha tenido tu nombre escrito en el fondo, incluso cuando nadie lo ve.</li>
+    <li><strong>Mis lágrimas.</strong><br>Algunas no fueron de dolor, sino de agradecimiento por lo mucho que tu existencia ha significado para mí.</li>
+    <li><strong>Mi silencio respetuoso.</strong><br>Aunque muchas veces quise acercarme más, he elegido cuidarte con distancia y oración.</li>
+    <li><strong>Mi creatividad.</strong><br>Cada página, cada historia, cada símbolo… ha sido una ofrenda sincera, no para impresionarte, sino para que Dios vea cuánto importa tú existencia en mi vida.</li>
+  </ul>
+  <p>Gracias por existir.</p>
+</div>
+
+  <a href="index.html" class="volver">← Volver al inicio</a>
+
+  <script>
+    // Crear estrellas parpadeantes
+    for (let i = 0; i < 100; i++) {
+      const estrella = document.createElement('div');
+      estrella.classList.add('estrella');
+      estrella.style.top = `${Math.random() * 100}%`;
+      estrella.style.left = `${Math.random() * 100}%`;
+      estrella.style.animationDuration = `${1 + Math.random() * 2}s`;
+      estrella.style.animationDelay = `${Math.random() * 2}s`;
+      document.body.appendChild(estrella);
+    }
+
+    function mostrarCajaSecreta() {
+      document.getElementById("mensajeFinal").style.display = "none";
+      const caja = document.getElementById("cajaSecreta");
+      caja.style.display = "block";
+      caja.style.opacity = "0";
+      setTimeout(() => {
+        caja.style.animation = "fadeIn 2s ease forwards";
+        caja.style.opacity = "1";
+      }, 100);
+    }
+
+    // Verificar entrada de cita
+    const textarea = document.getElementById('entradaCita');
+    const boton = document.getElementById('botonDesbloqueo');
+    const citaCorrecta = "Con amor eterno te he amado";
+
+    textarea.addEventListener('input', () => {
+      const entrada = textarea.value.trim();
+      if (entrada === citaCorrecta) {
+        boton.disabled = false;
+        boton.classList.remove('bloqueado');
+        boton.classList.add('desbloqueado');
+        boton.textContent = '💜 Continuar';
+      } else {
+        boton.disabled = true;
+        boton.classList.remove('desbloqueado');
+        boton.classList.add('bloqueado');
+        boton.textContent = '🔒 Desbloquear';
+      }
+    });
+
+    boton.addEventListener('click', () => {
+      if (!boton.disabled) {
+        document.getElementById("cajaSecreta").style.display = "none";
+        const cajaFinal = document.getElementById("cajaFinal");
+        cajaFinal.style.display = "block";
+        cajaFinal.style.opacity = "0";
+        setTimeout(() => {
+          cajaFinal.style.animation = "fadeIn 2s ease forwards";
+          cajaFinal.style.opacity = "1";
+        }, 100);
+      }
+    });
+    window.addEventListener('DOMContentLoaded', () => {
+  const mensaje = document.getElementById("mensajeFinal");
+  mensaje.style.opacity = "0";
+  mensaje.style.display = "block";  // aseguramos que esté visible
+  setTimeout(() => {
+    mensaje.style.animation = "fadeIn 2s ease forwards";
+    mensaje.style.opacity = "1";  // para que sea visible
+  }, 100);
+});
+  </script>
+
+</body>
+</html>
