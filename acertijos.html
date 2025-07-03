@@ -147,8 +147,26 @@
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
     z-index: 100;
   }
-    
+    .btn-cerrar {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  color: #d9bfff;
+  font-size: 1.6rem;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  z-index: 101;
+}
+.btn-cerrar:hover {
+  color: #f3e8ff;
+}
   </style>
+  
+  
 </head>
 <body>
 
@@ -172,7 +190,8 @@
 </div>
 
 <div id="popupSecreto">
-  <h4>Mi historia</h4>
+  <button id="cerrarPopup" class="btn-cerrar">&times;</button>
+  <h4>Mi secreto</h4>
   <p>
     Hace un tiempo pasé por un momento muy difícil. Sinceramente, no me sentía suficiente, y eso me llevó al borde de una depresión. Aunque sigo luchando con ese sentimiento, incluso cuando estoy frente a los demás, tú lograste ser un refugio sin saberlo.
   </p>
@@ -183,7 +202,6 @@
     Gracias por eso. Gracias por existir. Gracias por tu compañía. Gracias por tanto. Aun sin saberlo, fuiste parte del milagro que evitó que me rindiera.
   </p>
 </div>
-
   <script>
     const preguntas = [
       {
@@ -292,6 +310,12 @@
       localStorage.setItem('modoOscuro', !esClaro);
       toggleDark.textContent = esClaro ? 'Modo Oscuro' : 'Modo Claro';
     });
+    document.getElementById('cerrarPopup').addEventListener('click', () => {
+  const popup = document.getElementById('popupSecreto');
+  popup.classList.remove('mostrar');
+  popup.style.display = 'none';
+});
+
 
     cargarPregunta();
     actualizarVidas();
