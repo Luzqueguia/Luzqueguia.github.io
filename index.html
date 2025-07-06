@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Para mi pastora</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+<style>
+  <!-- Botones de historia 1-->
+body {
+background: #f3e8ff;
+font-family: 'Segoe UI', sans-serif;
+color: #4a3f77;
+transition: background-color 0.5s, color 0.5s;
+}
+.caja-central {
+max-width: 800px;
+margin: auto;
+padding: 2rem;
+background: #fff9ff;
+border-radius: 20px;
+box-shadow: 0 0 25px rgba(100, 80, 150, 0.1);
+transition: background-color 0.5s, color 0.5s;
+}
+h1, h2, h4 {
+color: #7c5ab2;
+}
+.estado-animo button {
+margin: 0.3rem;
+border-radius: 20px;
+}
+#imagenSorpresa {
+display: none;
+width: 100%;
+max-width: 700px;
+margin-top: 1rem;
+margin-left: auto;
+margin-right: 0;
+border-radius: 16px;
+box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+#mensajeImagen {
+display: none;
+margin-top: 1rem;
+font-style: italic;
+color: #5a4fcf;
+background-color: #f0e6ff;
+padding: 1rem;
+border-radius: 10px;
+}
+.frase, .cita {
+margin: 1rem 0;
+padding: 1rem;
+border-left: 5px solid #b49be0;
+background: #f6f0fc;
+border-radius: 10px;
+}
+.btn-primary {
+background-color: #b49be0;
+border: none;
+}
+.btn-primary:hover {
+background-color: #a183d5;
+}
+.btn-outline-custom {
+color: #7c5ab2;
+border-color: #b49be0;
+}
+.btn-outline-custom:hover {
+background-color: #e8ddf9;
+color: #4a3f77;
+}
+.frase-especial {
+font-family: 'Georgia', 'Times New Roman', serif;
+font-style: italic;
+font-size: 1.1rem;
+color: #5a4fcf;
+background-color: #f6f0fc;
+padding: 0.8rem 1rem;
+border-left: 4px solid #b49be0;
+border-radius: 10px;
+margin: 1.5rem auto;
+max-width: 600px;
+box-shadow: 0 2px 5px rgba(120, 80, 180, 0.1);
+}
+.texto-central {
+font-family: 'Georgia', 'Times New Roman', serif;
+font-style: italic;
+font-size: 1.2rem;
+color: #5e4b8b;
+padding: 1rem 1.5rem;
+text-align: center;
+max-width: 700px;
+margin: 2rem auto;
+}
+.nota-final {
+font-family: 'Georgia', serif;
+font-size: 0.95rem;
+font-style: italic;
+color: #6e5a99;
+text-align: center;
+padding: 1rem;
+margin-top: 3rem;
+background-color: #f4effb;
+border-radius: 12px;
+box-shadow: 0 2px 6px rgba(150, 120, 200, 0.1);
+max-width: 600px;
+margin-left: auto;
+margin-right: auto;
+transition: background-color 0.5s, color 0.5s;
+}
+
+/* Modo oscuro */
+body.dark-mode {
+background: #2c2a3e;
+color: #c7c3e0;
+}
+body.dark-mode .caja-central {
+background: #3b3752;
+color: #d0c9f2;
+box-shadow: 0 0 25px rgba(180, 160, 240, 0.3);
+}
+body.dark-mode h1, body.dark-mode h2, body.dark-mode h4 {
+color: #bba8ff;
+}
+body.dark-mode .btn-outline-custom {
+color: #bba8ff;
+border-color: #a291f7;
+}
+body.dark-mode .btn-outline-custom:hover {
+background-color: #5a56a9;
+color: #e6e1ff;
+}
+body.dark-mode .btn-primary {
+background-color: #937aff;
+}
+body.dark-mode .btn-primary:hover {
+background-color: #7a5de6;
+}
+body.dark-mode #mensajeImagen {
+background-color: #5a56a9;
+color: #e6e1ff;
+}
+body.dark-mode .frase, body.dark-mode .cita {
+background: #4b467e;
+border-left-color: #937aff;
+color: #e6e1ff;
+}
+body.dark-mode .frase-especial {
+color: #bba8ff;
+background-color: #4b467e;
+border-left-color: #937aff;
+box-shadow: 0 2px 5px rgba(120, 80, 180, 0.4);
+}
+body.dark-mode .texto-central {
+color: #cfc9ff;
+}
+body.dark-mode .nota-final {
+background-color: #3b3752;
+color: #cfc9ff;
+box-shadow: 0 2px 6px rgba(150, 120, 200, 0.3);
+}
+
+/* Botón modo oscuro */
+#toggleDark {
+position: fixed;
+top: 10px;
+right: 10px;
+background-color: #b49be0;
+border: none;
+padding: 10px 15px;
+border-radius: 20px;
+color: white;
+cursor: pointer;
+font-weight: bold;
+box-shadow: 0 0 5px rgba(180, 155, 224, 0.7);
+transition: background-color 0.3s;
+z-index: 1000;
+transition: opacity 0.5s ease;
+}
+#toggleDark:hover {
+background-color: #a183d5;
+}
+.luciernaga {
+  position: fixed;
+  font-size: 1.3rem;
+  pointer-events: none;
+  animation: parpadeo 2s ease-in-out infinite, flotacion 5s linear forwards;
+  opacity: 0;
+  z-index: 9999;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+/* ⭐️ Modo claro – dorado brillante */
+body:not(.dark-mode) .luciernaga {
+  color: #FFD700; /* Dorado puro */
+  text-shadow: 
+    0 0 6px #FFE066,
+    0 0 12px #FFD700,
+    0 0 18px #F6E27F;
+}
+
+/* 🌙 Modo oscuro – plateado brillante */
+body.dark-mode .luciernaga {
+  color: #C0C0C0; /* Plateado */
+  text-shadow: 
+    0 0 6px #E0E0E0,
+    0 0 12px #DCDCDC,
+    0 0 18px #B0C4DE;
+}
+
+@keyframes parpadeo {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 2; }
+}
+
+@keyframes flotacion {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(10px, -40px); opacity: 0; }
+}
+
+</style>
+</head>
+<body>
+    
+<button id="toggleDark">Modo Oscuro</button>
+
+<div class="container my-5">
+<div class="caja-central text-center">
+<h2>Luz de mi nuevo mundo</h2>
+<p class="frase-especial">
+“Este rincón fue creado <span style="font-weight:bold; color:#8a6bb8;">con</span> cariño solo para Ti💜”
+</p>
+<p class="texto-central">
+Hoy no fue fácil. <br>Tal vez sentiste que el mundo era más grande que tus fuerzas… <br> pero aun en el silencio, Dios está. <br>
+Y yo, en todo momento, te tengo presente. <br> <br>
+
+Este sitio no tiene respuestas mágicas, solo lo que me nace decirte: palabras de cariño, admiración y fe en que Dios no te dejará caer nunca. ❤️‍🩹
+</p>
+</p>
+<!-- Estado de ánimo -->
+<div class="estado-animo my-4">
+<h4>¿Cómo se siente hoy?</h4>
+<div>
+<button class="btn btn-outline-custom" onclick="mostrarFrase('triste')">Triste</button>
+<button class="btn btn-outline-custom" onclick="mostrarFrase('cansada')">Cansada</button>
+<button class="btn btn-outline-custom" onclick="mostrarFrase('desanimada')">Desanimada</button>
+<button class="btn btn-outline-custom" onclick="mostrarFrase('insegura')">Insegura</button>
+<button class="btn btn-outline-custom" onclick="mostrarFrase('preocupada')">Preocupada</button>
+<button class="btn btn-outline-custom" onclick="mostrarFrase('consuelo')">Consuelo</button>
+<button class="btn btn-outline-custom" onclick="mostrarFrase('sola')">Sola</button>
+<button class="btn btn-outline-custom" onclick="mostrarFrase('ansiosa')">Ansiosa</button>
+</div>
+</div>
+
+<!-- Resultado emocional -->
+<div id="respuestaEmocion" class="frase"></div>
+
+<!-- Citas bíblicas inspiradoras -->
+<h2 class="mt-4">Citas bíblicas para el alma</h2>
+<div class="cita">
+“El Señor es mi pastor; nada me faltará.” – Salmo 23:1
+</div>
+<div class="cita">
+“Echa sobre El Señor tu carga, y él te sustentará.” – Salmo 55:22
+</div>
+<div class="cita">
+“Clama a mí, y yo te responderé.” – Jeremías 33:3
+</div>
+
+<!-- Frases personales -->
+<h2 class="mt-4">Frases que me han nacido por ti, Pastora</h2>
+<div class="frase">
+“Una ovejita nunca deja de orar por su pastora.”
+</div>
+<div class="frase">
+“Tu voz calma mis tormentas. Tu ejemplo me guía hacia Dios.”
+</div>
+<div class="frase">
+“Aunque no siempre hable, te llevo presente en cada batalla, porque tú sembraste fe en mí.”
+</div>
+<h5></h5
+<br>
+<a href="pizzara.html" title="Leer historia" class="btn btn-primary mt-4" style="font-style: italic;">
+    ✍️Dibuja con amor
+<br>
+<a href="historia.html" title="Leer historia" class="btn btn-primary mt-4" style="font-style: italic;">
+    📖 Una historia diaria para Ti
+</a>
+<br>
+<a href="lazos.html" title="unidos" class="btn btn-primary mt-4" style="font-style: italic;">
+    🌌 Un pedazo de galaxia
+</a>
+<br>
+<a href="Via.html" title="luz de vida" class="btn btn-primary mt-4" style="font-style: italic;">
+    🕯️Lugar seguro...
+    </a>
+    <br>
+<a href="acertijos.html" title="luz de vida" class="btn btn-primary mt-4" style="font-style: italic;">
+    🌟Jugemos un poco
+    </a>
+    <br>
+<a href="Sigue_asi.html" title="vida" class="btn btn-primary mt-4" style="font-style: italic;">
+    ❤️‍🩹Esto te gustara...
+    </a>
+<br>
+<!-- Imagen especial -->
+<button class="btn btn-primary mt-4" onclick="mostrarImagen()">Ver un pequeño detalle</button>
+<img id="imagenSorpresa" src="tqm.jpg" alt="Imagen sorpresa" />
+<br>
+
+<div id="mensajeImagen">
+No estamos en la misma imagen, pero Dios sí nos tiene en el mismo propósito. Tu vida sigue tocando la mía. Gracias por tanto querida Mayte.
+</div>
+</div>
+</div>
+
+
+<p class="nota-final">
+Esta página en un futuro recibirá actualizaciones,<br />
+para acompañarte mejor y seguir presente en tu vida —<br />
+incluso en los días más silenciosos o pesados.<br /><br />
+
+✨ <strong>Cuando necesites una pausa, vuelve aquí.</strong> ✨ <br />
+Tal vez solo necesites una frase, una oración... o una ovejita que te recuerde cuánto vales.<br /><br />
+
+🌷 <em>Haz algo pequeño por tu estado de ánimo hoy,</em> 🌷<br />
+porque tú también mereces consuelo, descanso y alegría.<br /><br />
+
+<strong>Con cariño: Jesús</strong> 🕊️
+</p>
+
+
+<script>
+let lastScrollTop = 0;
+const toggleDark = document.getElementById('toggleDark');
+
+window.addEventListener('scroll', function () {
+    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+    if (scrollTop > lastScrollTop) {
+        // Bajando
+        toggleDark.style.opacity = '0';
+        toggleDark.style.pointerEvents = 'none';
+    } else {
+        // Subiendo
+        toggleDark.style.opacity = '1';
+        toggleDark.style.pointerEvents = 'auto';
+    }
+
+    lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+});
+
+// Restaurar modo oscuro si estaba activado antes
+window.addEventListener('DOMContentLoaded', () => {
+    const modoOscuroGuardado = localStorage.getItem('modoOscuro');
+    if (modoOscuroGuardado === 'true') {
+        document.body.classList.add('dark-mode');
+        toggleDark.textContent = 'Modo Claro';
+    } else {
+        toggleDark.textContent = 'Modo Oscuro';
+    }
+});
+
+// Activar/desactivar modo oscuro al hacer clic
+toggleDark.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    const activo = document.body.classList.contains('dark-mode');
+    localStorage.setItem('modoOscuro', activo);
+    toggleDark.textContent = activo ? 'Modo Claro' : 'Modo Oscuro';
+});
+function mostrarImagen() {
+  const img = document.getElementById('imagenSorpresa');
+  const mensaje = document.getElementById('mensajeImagen');
+  const visible = img.style.display === 'block';
+
+  img.style.display = visible ? 'none' : 'block';
+  mensaje.style.display = visible ? 'none' : 'block';
+
+  if (!visible) {
+    generarEstrellas(27); // Lluvia de estrellas cuando se muestra la imagen
+  }
+}
+
+function generarEstrellas(cantidad) {
+  for (let i = 0; i < cantidad; i++) {
+    const luciernaga = document.createElement('div');
+    luciernaga.classList.add('luciernaga');
+    luciernaga.innerText = '✦';
+
+    const size = Math.random() * 1.5 + 0.5;
+    luciernaga.style.fontSize = `${size}rem`;
+
+    luciernaga.style.left = `${Math.random() * window.innerWidth}px`;
+    luciernaga.style.top = `${Math.random() * window.innerHeight}px`;
+
+    document.body.appendChild(luciernaga);
+
+    setTimeout(() => {
+      luciernaga.remove();
+    }, 5000); // Desaparecen después de 5 segundos
+  }
+}
+
+function mostrarFrase(estado) {
+    const mensaje = {
+        triste: "El Señor está cerca de los quebrantados de corazón. Hoy oro para que sienta su consuelo.",
+        cansada: "Dios renueva sus fuerzas como las del águila. No está sola.",
+        desanimada: "Aun en medio del valle, Dios sigue escribiendo una historia hermosa con su vida.",
+        insegura: "Dios no se equivoca contigo. estás capacitada, elegida y amada.",
+        preocupada: "El Señor cuida de ti. Nada se escapa de sus manos, ni siquiera lo que más le inquieta.",
+        consuelo: "Cuando tu alma necesita un abrazo, Dios te lo da con Su palabra. Hoy, Él quiere consolarte y recordarte que sigue contigo.",
+        sola: "Aunque nadie lo vea, Dios camina a tu lado. Nunca estás realmente sola.",
+        ansiosa: "Echa su ansiedad sobre Él, porque Él cuida de ti. Respira, Él tiene el control."
+    };
+    document.getElementById('respuestaEmocion').textContent = mensaje[estado] || '';
+}
+
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
